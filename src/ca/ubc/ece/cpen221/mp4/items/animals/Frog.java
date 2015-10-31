@@ -30,7 +30,7 @@ public class Frog implements LivingItem{
 
 	@Override
 	public int getMovingRange ( ){
-		return 1; // Can only move to adjacent locations.
+		return 2; // Can jump around.
 	}
 
 	@Override

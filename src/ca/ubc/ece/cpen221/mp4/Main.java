@@ -34,6 +34,8 @@ public class Main {
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
 	static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
+	static final int INITIAL_FROGS = INITIAL_GRASS / 20;
+	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 3;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -57,6 +59,8 @@ public class Main {
 		addGnats(world);
 		addRabbits(world);
 		addFoxes(world);
+		addFrogs(world);
+		addGnawtys(world);
 		// TODO: You may add your own creatures here!
 	}
 
@@ -73,6 +77,24 @@ public class Main {
 			Gnat gnat = new Gnat(loc);
 			world.addItem(gnat);
 			world.addActor(gnat);
+		}
+	}
+	
+	private void addFrogs(World world) {
+		for (int i = 0; i < INITIAL_FROGS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Frog frog = new Frog(loc);
+			world.addItem(frog);
+			world.addActor(frog);
+		}
+	}
+	
+	private void addGnawtys(World world) {
+		for (int i = 0; i < INITIAL_GNAWTYS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Gnawty gnawty = new Gnawty(loc);
+			world.addItem(gnawty);
+			world.addActor(gnawty);
 		}
 	}
 
