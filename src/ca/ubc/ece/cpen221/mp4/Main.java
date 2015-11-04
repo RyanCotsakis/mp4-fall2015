@@ -83,7 +83,7 @@ public class Main {
 	private void addFrogs(World world) {
 		for (int i = 0; i < INITIAL_FROGS; i++) {
 			Location loc = Util.getRandomEmptyLocation(world);
-			Frog frog = new Frog(loc);
+			Crocodile frog = new Crocodile(loc);
 			world.addItem(frog);
 			world.addActor(frog);
 		}

@@ -11,14 +11,14 @@ import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
 import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
-public class Frog implements LivingItem{
+public class Crocodile implements LivingItem{
 	private static final int MEAT_CALORIES = 120;
 	private static final int STRENGTH = 20;
 
 	private Location location;
 	private boolean isDead;
 	
-	public Frog (Location initialLocation){
+	public Crocodile (Location initialLocation){
 		this.location = initialLocation;
 		isDead = false;
 	}
@@ -53,6 +53,7 @@ public class Frog implements LivingItem{
 		return STRENGTH;
 	}
 
+	//change??
 	@Override
 	public void loseEnergy (int energy){
 		isDead = true;
