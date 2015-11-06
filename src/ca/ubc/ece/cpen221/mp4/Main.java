@@ -59,7 +59,7 @@ public class Main {
 		addGnats(world);
 		addRabbits(world);
 		addFoxes(world);
-		addFrogs(world);
+		addCrocodiles(world);
 		addGnawtys(world);
 		// TODO: You may add your own creatures here!
 	}
@@ -80,12 +80,12 @@ public class Main {
 		}
 	}
 	
-	private void addFrogs(World world) {
+	private void addCrocodiles(World world) {
 		for (int i = 0; i < INITIAL_FROGS; i++) {
 			Location loc = Util.getRandomEmptyLocation(world);
-			Crocodile frog = new Crocodile(loc);
-			world.addItem(frog);
-			world.addActor(frog);
+			Crocodile croc = new Crocodile(loc);
+			world.addItem(croc);
+			world.addActor(croc);
 		}
 	}
 	
