@@ -14,7 +14,7 @@ public class Lion implements LivingItem {
 
     private static final int INITIAL_ENERGY = 100;
     private static final int MAX_ENERGY = 120;
-    private static final int STRENGTH = 100;
+    private static final int STRENGTH = 350;
     private static final int VIEW_RANGE = 5;
     private static final int MIN_BREEDING_ENERGY = 20;
     private static final ImageIcon LionImage = Util.loadImage("heyena.gif");
@@ -49,7 +49,7 @@ public class Lion implements LivingItem {
 
     @Override
     public String getName() {
-        return "Hyena";
+        return "Lion";
     }
 
     @Override
@@ -59,8 +59,7 @@ public class Lion implements LivingItem {
 
     @Override
     public int getStrength() {
-        // TODO Auto-generated method stub
-        return 0;
+        return STRENGTH;
     }
 
     @Override
