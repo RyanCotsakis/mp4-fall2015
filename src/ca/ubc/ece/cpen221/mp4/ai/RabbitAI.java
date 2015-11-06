@@ -99,7 +99,9 @@ public class RabbitAI extends AbstractAI {
 		if(numOf("Grass")>0){
 			Item closestGrass = getClosest("Grass", animal);
 			if(closestGrass.getLocation().getDistance(animal.getLocation()) == 1){
-				return new EatCommand(animal, closestGrass);
+				if(numOf("Grass") > numOf("Rabbit"))
+					return new EatCommand(animal, closestGrass);
+				return new WaitCommand();
 			}
 			
 			int grassX = closestGrass.getLocation().getX();
