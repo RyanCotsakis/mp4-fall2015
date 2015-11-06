@@ -72,25 +72,25 @@ public class RabbitAI extends AbstractAI {
 		if(animal.getEnergy() >= animal.getMinimumBreedingEnergy()){
 			Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
-				if(!dangerDirection.equals(Direction.NORTH)){;
+				if(foxFound && !dangerDirection.equals(Direction.NORTH)){;
 					return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.EAST);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
-				if(!dangerDirection.equals(Direction.EAST)){;
+				if(foxFound && !dangerDirection.equals(Direction.EAST)){;
 					return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
-				if(!dangerDirection.equals(Direction.SOUTH)){
+				if(foxFound && !dangerDirection.equals(Direction.SOUTH)){
 					return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.WEST);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
-				if(!dangerDirection.equals(Direction.WEST)){
+				if(foxFound && !dangerDirection.equals(Direction.WEST)){
 					return new BreedCommand(animal, breedLocation);
 				}
 			}
@@ -99,7 +99,7 @@ public class RabbitAI extends AbstractAI {
 		if(numOf("Grass")>0){
 			Item closestGrass = getClosest("Grass", animal);
 			if(closestGrass.getLocation().getDistance(animal.getLocation()) == 1){
-				if(numOf("Grass") > numOf("Rabbit"))
+				if(numOf("Grass") > numOf("Rabbit") || true)
 					return new EatCommand(animal, closestGrass);
 				return new WaitCommand();
 			}
