@@ -32,16 +32,22 @@ public class FoxAI extends AbstractAI {
 	public Command getNextAction(ArenaWorld world, ArenaAnimal animal) {
 	    foxLocation= animal.getLocation(); // get current location of the fox
 	    ItemsInRange= world.searchSurroundings(animal);
+	    
         Item targetRabbit=null; 
+        Location targetLocation=foxLocation;
 
-	    if(isItemAround("Rabbit")==true){
+	    if(isItemAround("Rabbit")){
 	        targetRabbit=getClosest("Rabbit", animal);   
-	        Location targetLocation=targetRabbit.getLocation();
+	        targetLocation=targetRabbit.getLocation();
 	        
-	        return new MoveCommand(animal, targetLocation);
 	    }
-
-		return new WaitCommand();
+	    
+        if(this.isLocationEmpty(world, animal, targetLocation)){
+            return new MoveCommand(animal, targetLocation);
+        }
+        
+	    else
+	        return new WaitCommand();
 	}
 	
 	/**
@@ -57,7 +63,7 @@ public class FoxAI extends AbstractAI {
 	    
 	       for(Item item: ItemsInRange){
 	           if(item.getName().equals(itemToFind)){
-	               int itemDistance=item.getLocation().getDistance(foxLocation); //gets distance of this item
+	               int itemDistance=foxLocation.getDistance(item.getLocation()); //gets distance of this item
 	                                                                             // from my location
 	               if(itemDistance<smallestDistance){
 	                   smallestDistance=itemDistance;
@@ -80,10 +86,11 @@ public class FoxAI extends AbstractAI {
 	 */
 	private boolean isItemAround(String itemName){
         for(Item item: ItemsInRange){
-            if(item.getName().equals(itemName)){
+            
+            if(item.getName().equals(itemName))
                 return true;
-                }
             }
+        
         return false;
 	}
 	

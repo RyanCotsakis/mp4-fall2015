@@ -60,7 +60,7 @@ public class Main {
 		addRabbits(world);
 		addFoxes(world);
 		addCrocodiles(world);
-		addGnawtys(world);
+		//addGnawtys(world);
 		// TODO: You may add your own creatures here!
 	}
 
@@ -89,14 +89,14 @@ public class Main {
 		}
 	}
 	
-	private void addGnawtys(World world) {
-		for (int i = 0; i < INITIAL_GNAWTYS; i++) {
-			Location loc = Util.getRandomEmptyLocation(world);
-			Gnawty gnawty = new Gnawty(loc);
-			world.addItem(gnawty);
-			world.addActor(gnawty);
-		}
-	}
+//	private void addGnawtys(World world) {
+//		for (int i = 0; i < INITIAL_GNAWTYS; i++) {
+//			Location loc = Util.getRandomEmptyLocation(world);
+//			Gnawty gnawty = new Gnawty(loc);
+//			world.addItem(gnawty);
+//			world.addActor(gnawty);
+//		}
+//	}
 
 	private void addFoxes(World world) {
 		FoxAI foxAI = new FoxAI();
