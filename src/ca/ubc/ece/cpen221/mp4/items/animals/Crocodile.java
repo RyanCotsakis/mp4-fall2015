@@ -12,6 +12,7 @@ import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
 public class Crocodile implements LivingItem{
+	private static final ImageIcon crocodileImage = Util.loadImage("crocodile.gif");
 	private static final int MEAT_CALORIES = 120;
 	private static final int STRENGTH = 20;
 
@@ -30,17 +31,17 @@ public class Crocodile implements LivingItem{
 
 	@Override
 	public int getMovingRange ( ){
-		return 2; // Can jump around.
+		return 1;
 	}
 
 	@Override
 	public ImageIcon getImage ( ){
-		return Util.loadImage("frog.gif");
+		return crocodileImage;
 	}
 
 	@Override
 	public String getName ( ){
-		return "Frog";
+		return "Crocodile";
 	}
 
 	@Override
