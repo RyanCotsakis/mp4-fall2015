@@ -34,8 +34,8 @@ public class Main {
 	static final int INITIAL_MANS = INITIAL_GRASS / 150;
 	static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
-	static final int INITIAL_FROGS = INITIAL_GRASS / 20;
-	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 3;
+	static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
+	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -60,7 +60,7 @@ public class Main {
 		addRabbits(world);
 		addFoxes(world);
 		addCrocodiles(world);
-		//addGnawtys(world);
+		addGnawtys(world);
 		// TODO: You may add your own creatures here!
 	}
 
@@ -81,7 +81,7 @@ public class Main {
 	}
 	
 	private void addCrocodiles(World world) {
-		for (int i = 0; i < INITIAL_FROGS; i++) {
+		for (int i = 0; i < INITIAL_CROCODILES; i++) {
 			Location loc = Util.getRandomEmptyLocation(world);
 			Crocodile croc = new Crocodile(loc);
 			world.addItem(croc);
@@ -89,14 +89,14 @@ public class Main {
 		}
 	}
 	
-//	private void addGnawtys(World world) {
-//		for (int i = 0; i < INITIAL_GNAWTYS; i++) {
-//			Location loc = Util.getRandomEmptyLocation(world);
-//			Gnawty gnawty = new Gnawty(loc);
-//			world.addItem(gnawty);
-//			world.addActor(gnawty);
-//		}
-//	}
+	private void addGnawtys(World world) {
+		for (int i = 0; i < INITIAL_GNAWTYS; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			Gnawty gnawty = new Gnawty(loc);
+			world.addItem(gnawty);
+			world.addActor(gnawty);
+		}
+	}
 
 	private void addFoxes(World world) {
 		FoxAI foxAI = new FoxAI();
