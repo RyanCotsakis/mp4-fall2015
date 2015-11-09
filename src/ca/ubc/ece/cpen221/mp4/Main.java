@@ -6,7 +6,7 @@ import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
-import ca.ubc.ece.cpen221.mp4.items.misc.Catapult;
+import ca.ubc.ece.cpen221.mp4.items.misc.*;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
 
@@ -37,6 +37,7 @@ public class Main {
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
 	static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
 	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
+	
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -62,7 +63,7 @@ public class Main {
 		addFoxes(world);
 		addCrocodiles(world);
 		addGnawtys(world);
-		// TODO: You may add your own creatures here!
+		addPortaGrass(world);
 	}
 
 	private void addGrass(World world) {
@@ -124,5 +125,12 @@ public class Main {
 		Catapult catapult = new Catapult(loc);
 		world.addItem(catapult);
 		world.addActor(catapult);
+	}
+	
+	private void addPortaGrass (World world){
+		Location loc = Util.getRandomEmptyLocation(world);
+		PortaGrass portaGrass = new PortaGrass(loc);
+		world.addItem(portaGrass);
+		world.addActor(portaGrass);
 	}
 }

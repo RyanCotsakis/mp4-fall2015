@@ -10,7 +10,7 @@ import ca.ubc.ece.cpen221.mp4.Util;
  * if fewer than half of all locations in the world are occupied.
  */
 public class Grass implements Item {
-	private final static ImageIcon grassImage = Util.loadImage("grass.gif");
+	public final static ImageIcon grassImage = Util.loadImage("grass.gif");
 
 	private Location location;
 	private boolean isDead;
