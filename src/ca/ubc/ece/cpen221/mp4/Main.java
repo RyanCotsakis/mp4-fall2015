@@ -37,6 +37,7 @@ public class Main {
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
 	static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
 	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
+	static final int INITIAL_BOXFOXES = 8;
 	
 
 	public static void main(String[] args) {
@@ -64,6 +65,7 @@ public class Main {
 		addCrocodiles(world);
 		addGnawtys(world);
 		addPortaGrass(world);
+		addBoxFoxes(world);
 	}
 
 	private void addGrass(World world) {
@@ -132,5 +134,14 @@ public class Main {
 		PortaGrass portaGrass = new PortaGrass(loc);
 		world.addItem(portaGrass);
 		world.addActor(portaGrass);
+	}
+	
+	private void addBoxFoxes(World world) {
+		for (int i = 0; i < INITIAL_BOXFOXES; i++) {
+			Location loc = Util.getRandomEmptyLocation(world);
+			BoxFox boxFox = new BoxFox(loc);
+			world.addItem(boxFox);
+			world.addActor(boxFox);
+		}
 	}
 }
