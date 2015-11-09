@@ -65,34 +65,28 @@ public class FoxAI extends AbstractAI {
 	        int rabX=targetRabbit.getLocation().getX();
 	        int rabY=targetRabbit.getLocation().getY();
 	        
-	        Direction targetDirectionX=null;
-	        Direction targetDirectionY=null;
+	        Direction targetDirection;
 	        
-	        //get direction of Rabbit in x
-            if(rabX > foxX)
-                targetDirectionX = Direction.EAST;
-            else
-                targetDirectionX = Direction.WEST;
+	        if(Math.abs(rabX - foxX) > Math.abs(rabY - foxY)){
+		        //get direction of Rabbit in x
+	            if(rabX > foxX)
+	                targetDirection = Direction.EAST;
+	            else
+	                targetDirection = Direction.WEST;
+	        }
+	        else{
+	            //get direction of rabbit in Y
+	            if(rabY < foxY) //north is decreasing y
+	                targetDirection = Direction.NORTH;
+	            else
+	                targetDirection = Direction.SOUTH;
+	        }
             
-            //get direction of rabbit in Y
-            if(rabY > foxY)
-                targetDirectionY = Direction.NORTH;
-            else
-                targetDirectionY = Direction.SOUTH;
-            
-	           // if fox can move towards rabbit in x direction do so
-	           Location newLocation = new Location(foxLocation, targetDirectionX);
-	            if(this.isLocationEmpty(world, animal, newLocation)){
-	                return new MoveCommand(animal, newLocation);
-	            }
-	            
-	            //otherwise move towards rabbit in y direction
-	            else{
-	                newLocation = new Location(foxLocation, targetDirectionY);
-	                if(this.isLocationEmpty(world, animal, newLocation)){
-	                    return new MoveCommand(animal, newLocation);
-	                }
-	            }
+	           // if fox can move towards rabbit in direction do so
+           Location newLocation = new Location(foxLocation, targetDirection);
+            if(this.isLocationEmpty(world, animal, newLocation)){
+                return new MoveCommand(animal, newLocation);
+            }
 	            
 	    }
 

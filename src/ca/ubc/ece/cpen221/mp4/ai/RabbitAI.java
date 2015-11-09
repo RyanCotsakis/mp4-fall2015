@@ -61,7 +61,7 @@ public class RabbitAI extends AbstractAI {
 			}
 			
 			else{
-				if(foxY > myY)
+				if(foxY < myY) //north is decreasing y
 					dangerDirection = Direction.NORTH;
 				else
 					dangerDirection = Direction.SOUTH;
