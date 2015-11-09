@@ -59,61 +59,76 @@ public class FoxAI extends AbstractAI {
 	            }
 	        }
 	        
+	        //if there are no obstacles or other foxes around it would be hard to catch the rabbit so breed first
+	        //if it has minimum energy
+	        if(numOf("Fox")==0 && numOf("Grass")==0 && numOf("Gnat")==0 && animal.getEnergy()>animal.getMinimumBreedingEnergy()){
+	            Location breedLocation=getBreedingLocation(animal, world);
+	            if(breedLocation!=null)
+	                return new BreedCommand(animal, breedLocation);
+	        }
+	        
 	        int foxX=foxLocation.getX();
 	        int foxY=foxLocation.getY();
 	        
 	        int rabX=targetRabbit.getLocation().getX();
 	        int rabY=targetRabbit.getLocation().getY();
 	        
-	        Direction targetDirection;
+	        Direction targetDirectionX;
+	        Direction targetDirectionY;
 	        
-	        if(Math.abs(rabX - foxX) > Math.abs(rabY - foxY)){
-		        //get direction of Rabbit in x
-	            if(rabX > foxX)
-	                targetDirection = Direction.EAST;
-	            else
-	                targetDirection = Direction.WEST;
-	        }
-	        else{
-	            //get direction of rabbit in Y
-	            if(rabY < foxY) //north is decreasing y
-	                targetDirection = Direction.NORTH;
-	            else
-	                targetDirection = Direction.SOUTH;
-	        }
+	      //get direction of rabbit in X
+	        if(rabX > foxX)
+                targetDirectionX = Direction.EAST;
+            else
+                targetDirectionX = Direction.WEST;
+	        
+	      //get direction of rabbit in Y
+            if(rabY < foxY) //north is decreasing y
+                targetDirectionY = Direction.NORTH;
+            else
+                targetDirectionY = Direction.SOUTH;
+	        
             
-	           // if fox can move towards rabbit in direction do so
-           Location newLocation = new Location(foxLocation, targetDirection);
-            if(this.isLocationEmpty(world, animal, newLocation)){
-                return new MoveCommand(animal, newLocation);
+	     // if fox is closer to rabbit in x direction and it can move towards rabbit in x direction do so
+            if(Math.abs(rabX - foxX) > Math.abs(rabY - foxY)){
+                Location newLocation = new Location(foxLocation, targetDirectionX);
+                if(this.isLocationEmpty(world, animal, newLocation))
+                    return new MoveCommand(animal, newLocation);
+                    
+                    //try y direction if that is not empty
+                else{
+                    newLocation = new Location(foxLocation, targetDirectionY);
+                    if(this.isLocationEmpty(world, animal, newLocation)){
+                        return new MoveCommand(animal, newLocation);
+                    }
+                }
+            }
+            
+            //otherwise move towards rabbit in y direction first and if that is not empty try x direction
+            else{
+                Location newLocation = new Location(foxLocation, targetDirectionY);
+                newLocation = new Location(foxLocation, targetDirectionY);
+                if(this.isLocationEmpty(world, animal, newLocation)){
+                    return new MoveCommand(animal, newLocation);
+                }
+                
+                else{
+                    newLocation = new Location(foxLocation, targetDirectionX);
+                    if(this.isLocationEmpty(world, animal, newLocation)){
+                        return new MoveCommand(animal, newLocation);
+                    }
+                }
             }
 	            
 	    }
 
 	    //if there was no Rabbit to catch breed in any location that is empty
-	   if((animal.getEnergy() >= animal.getMinimumBreedingEnergy() && numOf("Rabbit")>0) ||
-	           (animal.getEnergy()<animal.getMinimumBreedingEnergy()+10 && numOf("Rabbit")==0)){
-           Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
-           if(this.isLocationEmpty(world, animal, breedLocation)){
-               return new BreedCommand(animal, breedLocation);
-           }
+	   if(animal.getEnergy() >= animal.getMinimumBreedingEnergy() && numOf("Rabbit")>0){
+	       
+	       Location breedLocation=getBreedingLocation(animal, world);
+	       if(breedLocation!=null)
+	           return new BreedCommand(animal, breedLocation);
            
-           breedLocation = new Location(animal.getLocation(), Direction.EAST);
-           if(this.isLocationEmpty(world, animal, breedLocation)){
-               return new BreedCommand(animal, breedLocation);
-           }
-           
-           breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
-           if(this.isLocationEmpty(world, animal, breedLocation)){
-               return new BreedCommand(animal, breedLocation);
-           }
-           
-           
-           breedLocation = new Location(animal.getLocation(), Direction.WEST);
-           if(this.isLocationEmpty(world, animal, breedLocation)){
-
-               return new BreedCommand(animal, breedLocation);
-           }
 	   }
 	   
        Direction dir = Util.getRandomDirection();
@@ -126,7 +141,77 @@ public class FoxAI extends AbstractAI {
        return new WaitCommand();
 	}
 	
+	/**Get breeding location of animal
+	 * 
+	 * @param animal the animal that wants to breed, fox
+	 * @param world
+	 * @return breeding location that is an empty location that is adjacent to fox's current location
+	 *         if all adjacent locations are full return null
+	 */
+	private Location getBreedingLocation(ArenaAnimal animal, ArenaWorld world){
+	    //we should definitely make this nicer but the ideas is you prefer to breed somewhere if there is a rabbit
+	    //adjacent to that breeding location so check that for all directions first and if neither of them have
+	    //adjacent rabbits just breed anywhere that is empty
+	    Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
+        if(this.isLocationEmpty(world, animal, breedLocation) && isRabbitAdjacent(breedLocation)){
+            return breedLocation;
+        }
+        
+        breedLocation = new Location(animal.getLocation(), Direction.EAST);
+        if(this.isLocationEmpty(world, animal, breedLocation )&& isRabbitAdjacent(breedLocation)){
+            return breedLocation;
+        }
+        
+        breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
+        if(this.isLocationEmpty(world, animal, breedLocation)&& isRabbitAdjacent(breedLocation)){
+            return breedLocation;
+        }
+        
+        
+        breedLocation = new Location(animal.getLocation(), Direction.WEST);
+        if(this.isLocationEmpty(world, animal, breedLocation)){
+            return breedLocation;
+        }
+        
+        if(this.isLocationEmpty(world, animal, breedLocation)){
+            return breedLocation;
+        }
+        
+        breedLocation = new Location(animal.getLocation(), Direction.EAST);
+        if(this.isLocationEmpty(world, animal, breedLocation )){
+            return breedLocation;
+        }
+        
+        breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
+        if(this.isLocationEmpty(world, animal, breedLocation)){
+            return breedLocation;
+        }
+        
+        
+        breedLocation = new Location(animal.getLocation(), Direction.WEST);
+        if(this.isLocationEmpty(world, animal, breedLocation)){
+            return breedLocation;
+        }
+        return null;
+	    
+	}
 	
+	/**
+	 * Checks to see if there is a Rabbit adjacent to the given location
+	 * @param location
+	 * @return
+	 */
+	private boolean isRabbitAdjacent(Location location){
+	    for(Item item: itemsInRange){
+	        if(item.getName().equals("Rabbit")){
+	            
+                if(item.getLocation().getDistance(location)== 1){
+                    return true;
+                }
+	        }
+	    }
+	    return false;
+	}
     
     /**
      * Predict the next movement of a given Rabbit; assumes the rabbit is pretty smart
