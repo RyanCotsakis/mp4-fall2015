@@ -83,7 +83,7 @@ public class Crocodile implements LivingItem{
 
 	@Override
 	public Command getNextAction (World world){
-		// The Frog selects a random direction and check if the next location at
+		// The Crocodile selects a random direction and check if the next location at
 		// the direction is valid and empty. If yes, then it moves to the
 		// location, otherwise it waits.
 		Direction dir = Util.getRandomDirection();

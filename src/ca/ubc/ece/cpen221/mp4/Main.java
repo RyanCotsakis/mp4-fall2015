@@ -6,6 +6,7 @@ import ca.ubc.ece.cpen221.mp4.ai.*;
 import ca.ubc.ece.cpen221.mp4.items.Gardener;
 import ca.ubc.ece.cpen221.mp4.items.Grass;
 import ca.ubc.ece.cpen221.mp4.items.animals.*;
+import ca.ubc.ece.cpen221.mp4.items.misc.Catapult;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
 
@@ -55,7 +56,7 @@ public class Main {
 	public void initialize(World world) {
 		addGrass(world);
 		world.addActor(new Gardener());
-
+		addCatapult(world);
 		addGnats(world);
 		addRabbits(world);
 		addFoxes(world);
@@ -116,5 +117,12 @@ public class Main {
 			world.addItem(rabbit);
 			world.addActor(rabbit);
 		}
+	}
+	
+	private void addCatapult(World world){
+		Location loc = Util.getRandomEmptyLocation(world);
+		Catapult catapult = new Catapult(loc);
+		world.addItem(catapult);
+		world.addActor(catapult);
 	}
 }
