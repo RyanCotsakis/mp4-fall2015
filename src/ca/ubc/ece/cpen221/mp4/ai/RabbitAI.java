@@ -49,21 +49,24 @@ public class RabbitAI extends AbstractAI {
 		
 		if(numOf("Fox") > 0){
 			foxFound = true;
-			closestFox = getClosest("Fox",animal);
+			closestFox = getClosest("Fox",animal); //get the closest fox
 			int foxX = closestFox.getLocation().getX();
 			int foxY = closestFox.getLocation().getY();
+			
 			if(Math.abs(myX - foxX) > Math.abs(myY - foxY)){
 				if(foxX > myX)
 					dangerDirection = Direction.EAST;
 				else
 					dangerDirection = Direction.WEST;
 			}
+			
 			else{
 				if(foxY > myY)
 					dangerDirection = Direction.NORTH;
 				else
 					dangerDirection = Direction.SOUTH;
 			}
+			
 			Location newLocation = new Location(animal.getLocation(), this.oppositeDir(dangerDirection));
 			if(this.isLocationEmpty(world, animal, newLocation)){
 				return new MoveCommand(animal, newLocation);
@@ -137,6 +140,12 @@ public class RabbitAI extends AbstractAI {
 		return new WaitCommand();
 	}
 	
+	/**
+	 * get the number of an item present in the Rabbit's view range
+	 * 
+	 * @param itemName the name of the item that we want to find 
+	 * @return number of occurrences of the specified item in Rabbit's view range
+	 */
 	private int numOf(String itemName){
 		int numOfType = 0;
 		for(Item item : visibleItems){
