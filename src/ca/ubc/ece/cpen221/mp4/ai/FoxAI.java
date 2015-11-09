@@ -141,11 +141,11 @@ public class FoxAI extends AbstractAI {
        return new WaitCommand();
 	}
 	
-	/**Get breeding location of animal
+	/**Get the preferred breeding location of animal
 	 * 
 	 * @param animal the animal that wants to breed, fox
 	 * @param world
-	 * @return breeding location that is an empty location that is adjacent to fox's current location
+	 * @return Location: breedingLocation that is an empty location that is adjacent to fox's current location
 	 *         if all adjacent locations are full return null
 	 */
 	private Location getBreedingLocation(ArenaAnimal animal, ArenaWorld world){
@@ -214,30 +214,38 @@ public class FoxAI extends AbstractAI {
 	}
     
     /**
-     * Predict the next movement of a given Rabbit; assumes the rabbit is pretty smart
-     * @param targetRabbit
-     * @return
+     * Predict the next movement of a given Rabbit; assumes the rabbit are smart and will runaway from 
+     * the closest fox
+     * @param Item thisRabbit
+     * @return Location , the predicted next location of rabbit 
      */
-    private Location nextRabbitMovement(ArenaAnimal fox, ArenaWorld world, Item targetRabbit){
+    private Location nextRabbitMovement(ArenaAnimal fox, ArenaWorld world, Item thisRabbit){
         Direction dangerDirection=null;
         
+        Location nextLocation;
+        
+        //check to see if there are other foxes that this fox can see who might be chasing this rabbit
+        //assumes that the rabbit will run away from the closest fox 
         if(numOf("Fox")>0){
-            Item dangerFox=getClosest("Fox", targetRabbit);
+            Item dangerFox=getClosest("Fox", thisRabbit);
             
-            dangerDirection=Util.getDirectionTowards(targetRabbit.getLocation(), dangerFox.getLocation());
+            dangerDirection=Util.getDirectionTowards(thisRabbit.getLocation(), dangerFox.getLocation());
             
-            Location nextLocation = new Location(targetRabbit.getLocation(), this.oppositeDir(dangerDirection));
+            nextLocation = new Location(thisRabbit.getLocation(), this.oppositeDir(dangerDirection));
             
+            //if the predicted next location of rabbit, that is in opposite direction of its closest fox, is empty
+            //go there
             if(this.isLocationEmpty(world,fox, nextLocation))
                 return nextLocation; 
             
+            //otherwise just return the current location of the rabbit
             else
-                return targetRabbit.getLocation();
-            //currently I don't check if this is an empty location, I should do that 
+                return thisRabbit.getLocation(); 
         }
         
+        //if no other foxes chasing the rabbit return its current location 
         else
-            return targetRabbit.getLocation();        
+            return nextLocation=thisRabbit.getLocation();        
  
     }
 	
@@ -287,10 +295,11 @@ public class FoxAI extends AbstractAI {
 //    }
     
     /**
-    * get the number of an item present in the Rabbit's view range
+    * Get the number of an item present in the fox's view range
     * 
     * @param itemName the name of the item that we want to find 
-    * @return number of occurrences of the specified item in Rabbit's view range
+    * @return number of occurrences of the specified item in fox's view range, if no item of that 
+    *         type present return 0
     */
    private int numOf(String itemName){
        int numOfType = 0;
@@ -303,11 +312,11 @@ public class FoxAI extends AbstractAI {
    }
 	
    /**
-    *  Find the closets itemToFind in fox's view range 
-    *  Precondition: the item must be in fox's view range
-    * @param itemToFind
-    * @param me
-    * @return
+    *  Find the itemToFind that minimizes the distance between myItem and itemToFind
+    *  Precondition: itemToFind must be in fox's view range
+    * @param itemToFind the item type that we want to find the closest one  of it
+    * @param myItem the item form which we measure the distance
+    * @return the closets item to myItem of the type itemToFind
     */
    private Item getClosest(String itemToFind, Item myItem){
        int smallestDistance=closest;
