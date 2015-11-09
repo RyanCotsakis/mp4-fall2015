@@ -97,25 +97,26 @@ public class FoxAI extends AbstractAI {
 	    }
 
 	    //if there was no Rabbit to catch breed in any location that is empty
-	   if(animal.getEnergy() >= animal.getMinimumBreedingEnergy()){
+	   if((animal.getEnergy() >= animal.getMinimumBreedingEnergy() && numOf("Rabbit")>0) ||
+	           (animal.getEnergy()<animal.getMinimumBreedingEnergy()+10 && numOf("Rabbit")==0)){
            Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
-           if(this.isLocationEmpty(world, animal, breedLocation) && numOf("Rabbit")>0){
+           if(this.isLocationEmpty(world, animal, breedLocation)){
                return new BreedCommand(animal, breedLocation);
            }
            
            breedLocation = new Location(animal.getLocation(), Direction.EAST);
-           if(this.isLocationEmpty(world, animal, breedLocation) && numOf("Rabbit")>0){
+           if(this.isLocationEmpty(world, animal, breedLocation)){
                return new BreedCommand(animal, breedLocation);
            }
            
            breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
-           if(this.isLocationEmpty(world, animal, breedLocation) && numOf("Rabbit")>0){
+           if(this.isLocationEmpty(world, animal, breedLocation)){
                return new BreedCommand(animal, breedLocation);
            }
            
            
            breedLocation = new Location(animal.getLocation(), Direction.WEST);
-           if(this.isLocationEmpty(world, animal, breedLocation) && numOf("Rabbit")>0){
+           if(this.isLocationEmpty(world, animal, breedLocation)){
 
                return new BreedCommand(animal, breedLocation);
            }
@@ -126,6 +127,8 @@ public class FoxAI extends AbstractAI {
        if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty((World) world, targetLocation)) {
            return new MoveCommand(animal, targetLocation);
        }
+       
+       
        return new WaitCommand();
 	}
 	
