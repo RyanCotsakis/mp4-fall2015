@@ -21,12 +21,12 @@ import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
 public class Lion implements LivingItem {
 
-    private static final int INITIAL_ENERGY = 200;
+    private static final int INITIAL_ENERGY = 100;
     private static final int MAX_ENERGY = 150;
     private static final int STRENGTH = 200;
     private static final int VIEW_RANGE = 10;
     private static final int MAX_NUM_OFFSPRINGS=2;
-    private static final int MIN_BREEDING_ENERGY=180;
+    private static final int MIN_BREEDING_ENERGY=130;
     private static final ImageIcon LionImage = Util.loadImage("lion.jpg");
     
     
