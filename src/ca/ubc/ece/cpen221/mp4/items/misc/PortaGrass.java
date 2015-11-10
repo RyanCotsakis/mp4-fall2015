@@ -101,6 +101,5 @@ public class PortaGrass implements LivingItem{
 
 	@Override
 	public void eat (Food food){
-		return;
 	}
 }
