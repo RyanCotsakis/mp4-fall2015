@@ -14,7 +14,7 @@ import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 public class Crocodile implements LivingItem{
 	private static final ImageIcon crocodileImage = Util.loadImage("crocodile.gif");
 	private static final int MEAT_CALORIES = 120;
-	private static final int STRENGTH = 20;
+	private static final int STRENGTH = 120;
 
 	private Location location;
 	private boolean isDead;
@@ -54,7 +54,6 @@ public class Crocodile implements LivingItem{
 		return STRENGTH;
 	}
 
-	//change??
 	@Override
 	public void loseEnergy (int energy){
 		isDead = true;

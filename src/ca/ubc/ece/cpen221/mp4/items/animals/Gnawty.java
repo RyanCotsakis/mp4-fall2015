@@ -14,11 +14,13 @@ import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 public class Gnawty implements LivingItem{
 	private static final ImageIcon gnawtyImage = Util.loadImage("gnawty.gif");
 
+	private static final int INITIAL_ENERGY = 50;
 	private static final int MEAT_CALORIES = 10;
-	private static final int STRENGTH = 100;
+	private static final int STRENGTH = 30;
 
 	private Location location;
 	private boolean isDead;
+	private int energy;
 
 	/**
 	 * Create a new Gnat at <code>initialLocation</code>. The
@@ -30,6 +32,8 @@ public class Gnawty implements LivingItem{
 	public Gnawty(Location initialLocation) {
 		this.location = initialLocation;
 		this.isDead = false;
+		
+		this.energy=INITIAL_ENERGY;
 	}
 
 	@Override
@@ -100,7 +104,7 @@ public class Gnawty implements LivingItem{
 	@Override
 	public int getEnergy() {
 		// doesn't every die, except when run over by a Vehicle
-		return MEAT_CALORIES;
+		return energy;
 	}
 
 	@Override

@@ -38,6 +38,7 @@ public class Main {
 	static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
 	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
 	static final int INITIAL_BOXFOXES = 8;
+	static final int INITIAL_LIONS = 10;
 	
 
 	public static void main(String[] args) {
@@ -66,6 +67,7 @@ public class Main {
 		addGnawtys(world);
 		addPortaGrass(world);
 		addBoxFoxes(world);
+		addLions(world);
 	}
 
 	private void addGrass(World world) {
@@ -144,4 +146,13 @@ public class Main {
 			world.addActor(boxFox);
 		}
 	}
+	
+	private void addLions(World world) {
+	        for (int i = 0; i < INITIAL_LIONS; i++) {
+	            Location loc = Util.getRandomEmptyLocation(world);
+	            Lion lion = new Lion(loc);
+	            world.addItem(lion);
+	            world.addActor(lion);
+	        }
+	    }
 }

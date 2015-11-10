@@ -1,45 +1,53 @@
 package ca.ubc.ece.cpen221.mp4.items.animals;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.ImageIcon;
 
+import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.Food;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
 import ca.ubc.ece.cpen221.mp4.ai.AI;
+import ca.ubc.ece.cpen221.mp4.commands.BreedCommand;
 import ca.ubc.ece.cpen221.mp4.commands.Command;
+import ca.ubc.ece.cpen221.mp4.commands.EatCommand;
+import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
+import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
+import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.LivingItem;
 
 public class Lion implements LivingItem {
 
-    private static final int INITIAL_ENERGY = 100;
-    private static final int MAX_ENERGY = 120;
-    private static final int STRENGTH = 350;
-    private static final int VIEW_RANGE = 5;
-    private static final int MIN_BREEDING_ENERGY = 20;
-    private static final ImageIcon LionImage = Util.loadImage("heyena.gif");
+    private static final int INITIAL_ENERGY = 200;
+    private static final int MAX_ENERGY = 150;
+    private static final int STRENGTH = 200;
+    private static final int VIEW_RANGE = 10;
+    private static final int MAX_NUM_OFFSPRINGS=5;
+    private static final int MIN_BREEDING_ENERGY=5;
+    private static final ImageIcon LionImage = Util.loadImage("lion.jpg");
     
-    private final AI ai;
     
     private Location location;
     private int energy;
     
+    private int numOfChildren=0;
     
-    public Lion (AI HyenaAI, Location initialLocation){
+    public Lion (Location initialLocation){
         this.location = initialLocation;
-        this.ai=HyenaAI;
     }
     
     @Override
     public void moveTo(Location targetLocation) {
-        // TODO Auto-generated method stub
+        this.location=targetLocation;
 
     }
 
     @Override
     public int getMovingRange() {
-        // TODO Auto-generated method stub
-        return 0;
+        return 2;
     }
 
     @Override
@@ -64,57 +72,87 @@ public class Lion implements LivingItem {
 
     @Override
     public void loseEnergy(int energy) {
-        this.energy = this.energy - energy;
+        //only loses energy by 10 if it is hit by a vehicle
+        this.energy -= energy;
 
     }
 
     @Override
     public boolean isDead() {
-        
+        return energy<=0;
     }
 
     @Override
     public int getPlantCalories() {
-        // TODO Auto-generated method stub
+        //not food
         return 0;
     }
 
     @Override
     public int getMeatCalories() {
-        // TODO Auto-generated method stub
+        //not food
         return 0;
     }
 
     @Override
     public int getCoolDownPeriod() {
-        // TODO Auto-generated method stub
-        return 0;
+        //cool down faster if it has more energy
+        if(this.energy>=MAX_ENERGY+30)
+            return 3;
+        
+        else return 5;
     }
 
     @Override
     public Command getNextAction(World world) {
-        // TODO Auto-generated method stub
-        return null;
+        Set<Item> surroundings = new HashSet<Item>();
+        surroundings = world.searchSurroundings(location, VIEW_RANGE);
+        
+        for(Item item: surroundings){
+            if(item.getName().equals("Rabbit") || item.getName().equals("Crocodile") 
+                    ||item.getName().equals("Fox")){
+                if(this.getLocation().getDistance(item.getLocation())>=2)
+                    return new EatCommand(this, item);
+                    
+            }
+        }
+        
+        //if it has less than the maximum children it can have in its life time and also if it has minimum required
+        //energy it breeds in a random adjacent location that is empty;
+        Location breedLocation=Util.getRandomEmptyAdjacentLocation(world, location);
+        if(this.getEnergy()>=MIN_BREEDING_ENERGY && numOfChildren<MAX_NUM_OFFSPRINGS && breedLocation!=null)
+            return new BreedCommand(this,breedLocation);
+        
+        //gets a random direction and moves there if it is empty
+        Direction direction = Util.getRandomDirection();
+        Location nextLocation = new Location(this.getLocation(), direction);
+        if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
+            return new MoveCommand(this, nextLocation);
+        }
+
+        return new WaitCommand();
     }
 
     @Override
     public int getEnergy() {
-        // TODO Auto-generated method stub
-        return 0;
+        return energy;
     }
 
     @Override
     public LivingItem breed() {
-        Lion child = new Lion(ai, location);
+        
+        Lion child = new Lion(location);
         child.energy = energy / 2;
         this.energy = energy / 2;
+        numOfChildren++;
+        
         return child;
     }
 
     @Override
     public void eat(Food food) {
-        // TODO Auto-generated method stub
-
+        // Note that energy does not exceed energy limit.
+        energy = Math.min(MAX_ENERGY, energy + food.getMeatCalories());
     }
 
 }
