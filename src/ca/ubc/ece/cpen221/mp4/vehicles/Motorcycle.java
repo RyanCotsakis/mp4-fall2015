@@ -17,14 +17,14 @@ import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.MoveableItem;
 
 public class Motorcycle implements MoveableItem, Actor {
-    private static final int INITIAL_ENERGY = 450;
-    private static final int MAX_ENERGY = 600;
-    private static final int STRENGTH = 500;
+    private static final int INITIAL_FUEL = 180;
+    private static final int MAX_ENERGY = 250;
+    private static final int STRENGTH = 200;
     private static final int COOLDOWN = 1;
     private static final ImageIcon motocycleImage = Util.loadImage("motorcycles.gif");
 
     private Location location;
-    private int energy;
+    private int fuel;
 
     /**
      * Create a new "Motorcycle" at
@@ -39,7 +39,7 @@ public class Motorcycle implements MoveableItem, Actor {
     public Motorcycle(Location initialLocation) {
         this.location = initialLocation;
 
-        this.energy = INITIAL_ENERGY;
+        this.fuel = INITIAL_FUEL;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class Motorcycle implements MoveableItem, Actor {
 
     @Override
     public void loseEnergy(int energy) {
-        this.energy-=energy;
+        this.fuel-=energy;
     }
 
     @Override
     public boolean isDead() {
-        return energy <=0;
+        return fuel <=0;
     }
 
     @Override
@@ -100,12 +100,45 @@ public class Motorcycle implements MoveableItem, Actor {
         return 1;
     }
 
-    //runs over rabbits??
     @Override
     public Command getNextAction(World world) {
+        //Motorcycle runs lions over making them lose energy and it gains energy itself
+        //its fuel decreases when it is moving around
+        
+        Direction direction;
+        Location nextLocation; 
+        
         Set<Item> surroundings = new HashSet<Item>();
-        surroundings = world.searchSurroundings(location, 3);
+        surroundings = world.searchSurroundings(location, 4);
+        
         for(Item item : surroundings){
+            //if it hits a lion, the lion looses 20 of its energy
+            //the fuel of motorcycle increases by 10
+            if(item.getName().equals("Lion")){
+                if(location.getDistance(item.getLocation())==1){
+                    item.loseEnergy(20);
+                    this.fuel+=10;
+                }
+                
+                //goes towards the lion if it can
+                direction=Util.getDirectionTowards(this.location, item.getLocation());
+                nextLocation = new Location(this.getLocation(), direction);
+                
+                if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
+                    return new MoveCommand(this, nextLocation);
+                }
+                        
+            }
+            
+            else{
+                //gets a random direction and moves there if it is empty
+                direction = Util.getRandomDirection();
+                nextLocation = new Location(this.getLocation(), direction);
+                if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
+                    return new MoveCommand(this, nextLocation);
+                }
+            }
+                
         }
         return new WaitCommand();
     }

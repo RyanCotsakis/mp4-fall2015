@@ -9,6 +9,7 @@ import ca.ubc.ece.cpen221.mp4.items.animals.*;
 import ca.ubc.ece.cpen221.mp4.items.misc.*;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
+import ca.ubc.ece.cpen221.mp4.vehicles.Motorcycle;
 
 /**
  * The Main class initialize a world with some {@link Grass}, {@link Rabbit}s,
@@ -68,6 +69,7 @@ public class Main {
 		addPortaGrass(world);
 		addBoxFoxes(world);
 		addLions(world);
+		addMotorcycles(world);
 	}
 
 	private void addGrass(World world) {
@@ -155,4 +157,13 @@ public class Main {
 	            world.addActor(lion);
 	        }
 	    }
+	
+	private void addMotorcycles(World world) {
+           for (int i = 0; i < INITIAL_MOTORCYCLES; i++) {
+               Location loc = Util.getRandomEmptyLocation(world);
+               Motorcycle motor = new Motorcycle(loc);
+               world.addItem(motor);
+               world.addActor(motor);
+           }
+       }
 }
