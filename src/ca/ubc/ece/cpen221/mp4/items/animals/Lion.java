@@ -25,8 +25,8 @@ public class Lion implements LivingItem {
     private static final int MAX_ENERGY = 150;
     private static final int STRENGTH = 200;
     private static final int VIEW_RANGE = 10;
-    private static final int MAX_NUM_OFFSPRINGS=5;
-    private static final int MIN_BREEDING_ENERGY=5;
+    private static final int MAX_NUM_OFFSPRINGS=2;
+    private static final int MIN_BREEDING_ENERGY=180;
     private static final ImageIcon LionImage = Util.loadImage("lion.jpg");
     
     
@@ -37,6 +37,8 @@ public class Lion implements LivingItem {
     
     public Lion (Location initialLocation){
         this.location = initialLocation;
+        
+        this.energy=INITIAL_ENERGY;
     }
     
     @Override
@@ -111,7 +113,7 @@ public class Lion implements LivingItem {
         for(Item item: surroundings){
             if(item.getName().equals("Rabbit") || item.getName().equals("Crocodile") 
                     ||item.getName().equals("Fox")){
-                if(this.getLocation().getDistance(item.getLocation())>=2)
+                if(this.getLocation().getDistance(item.getLocation())==1)
                     return new EatCommand(this, item);
                     
             }
@@ -120,7 +122,7 @@ public class Lion implements LivingItem {
         //if it has less than the maximum children it can have in its life time and also if it has minimum required
         //energy it breeds in a random adjacent location that is empty;
         Location breedLocation=Util.getRandomEmptyAdjacentLocation(world, location);
-        if(this.getEnergy()>=MIN_BREEDING_ENERGY && numOfChildren<MAX_NUM_OFFSPRINGS && breedLocation!=null)
+        if(this.getEnergy()>=MIN_BREEDING_ENERGY && this.numOfChildren<MAX_NUM_OFFSPRINGS && breedLocation!=null)
             return new BreedCommand(this,breedLocation);
         
         //gets a random direction and moves there if it is empty
