@@ -36,7 +36,7 @@ public class RabbitAI extends AbstractAI{
 
 		if (numOf(animal, world, "Fox") > 0) {
 			foxFound = true;
-			closestFox = getClosest("Fox", animal); // get the closest fox
+			closestFox = getClosest("Fox", (Item)animal, closest, world, animal); // get the closest fox
 			dangerDirection = Util.getDirectionTowards(animal.getLocation(), closestFox.getLocation());
 			Location newLocation = new Location(animal.getLocation(), this.oppositeDir(dangerDirection));
 			if (this.isLocationEmpty(world, animal, newLocation)) {
@@ -76,7 +76,7 @@ public class RabbitAI extends AbstractAI{
 		}
 
 		if (numOf(animal, world, "grass") > 0) {
-			Item closestGrass = getClosest("grass", animal);
+			Item closestGrass = getClosest("grass", (Item)animal, closest, world, animal);
 			if (closestGrass.getLocation().getDistance(animal.getLocation()) == 1) {
 				if (numOf(animal, world, "grass") >= numOf(animal, world, "Rabbit")
 						&& animal.getEnergy() <= animal.getMaxEnergy() - 10)
@@ -92,32 +92,32 @@ public class RabbitAI extends AbstractAI{
 
 		}
 
-		return MoveCommand.moveInRandomDirection(animal, (World) world);
+	       return MoveInRandomDirection(animal, world);
 	}
 
-	/**
-	 * finds the closest item of some type to the rabbit.
-	 * 
-	 * @param itemName
-	 *            must be in visible range
-	 * @return the item with the name "itemName" that is closest to the rabbit
-	 */
-	private Item getClosest (String itemName, ArenaAnimal animal){
-		int smallestDistance = closest;
-		Item closestItem = null;
-		for (Item item : visibleItems){
-			if (item.getName().equals(itemName)) {
-				Location myLocation = animal.getLocation();
-				int distance = item.getLocation().getDistance(myLocation);
-				if (distance < smallestDistance && distance != 0) {
-					smallestDistance = distance;
-					closestItem = item;
-				}
-			}
-		}
-		if (closestItem == null) {
-			throw new IllegalArgumentException();
-		}
-		return closestItem;
-	}
+//	/**
+//	 * finds the closest item of some type to the rabbit.
+//	 * 
+//	 * @param itemName
+//	 *            must be in visible range
+//	 * @return the item with the name "itemName" that is closest to the rabbit
+//	 */
+//	private Item getClosest (String itemName, ArenaAnimal animal){
+//		int smallestDistance = closest;
+//		Item closestItem = null;
+//		for (Item item : visibleItems){
+//			if (item.getName().equals(itemName)) {
+//				Location myLocation = animal.getLocation();
+//				int distance = item.getLocation().getDistance(myLocation);
+//				if (distance < smallestDistance && distance != 0) {
+//					smallestDistance = distance;
+//					closestItem = item;
+//				}
+//			}
+//		}
+//		if (closestItem == null) {
+//			throw new IllegalArgumentException();
+//		}
+//		return closestItem;
+//	}
 }

@@ -132,7 +132,7 @@ public class FoxAI extends AbstractAI {
            
 	   }
 	   
-       return MoveCommand.moveInRandomDirection(animal, (World) world);
+       return MoveInRandomDirection(animal, world);
 	}
 	
 	/**Get the preferred breeding location of animal
@@ -220,7 +220,7 @@ public class FoxAI extends AbstractAI {
         //check to see if there are other foxes that this fox can see who might be chasing this rabbit
         //assumes that the rabbit will run away from the closest fox 
         if(numOf(animal, world ,"Fox")>0){
-            Item dangerFox=getClosest("Fox", thisRabbit);
+            Item dangerFox=getClosest("Fox", thisRabbit, closest, world, animal);
             
             dangerDirection=Util.getDirectionTowards(thisRabbit.getLocation(), dangerFox.getLocation());
             
@@ -240,35 +240,6 @@ public class FoxAI extends AbstractAI {
         else
             return nextLocation=thisRabbit.getLocation();        
  
-    }
-    
-    /**
-     *  Find the itemToFind that minimizes the distance between myItem and itemToFind
-     *  Precondition: itemToFind must be in fox's view range
-     * @param itemToFind the item type that we want to find the closest one  of it
-     * @param myItem the item form which we measure the distance
-     * @return the closets item to myItem of the type itemToFind
-     */
-    private Item getClosest(String itemToFind, Item myItem){
-        int smallestDistance=closest;
-        Item closestItem=null;
-        
-           for(Item item: itemsInRange){
-               if(item.getName().equals(itemToFind)){
-                   int itemDistance=myItem.getLocation().getDistance(item.getLocation()); //gets distance of this item
-                                                                                 // from my location
-                   if(itemDistance<smallestDistance){
-                       smallestDistance=itemDistance;
-                       closestItem=item;
-                       }   
-                   }
-               }
-           
-            if(closestItem == null){
-                throw new IllegalArgumentException();
-            }
-            
-            return closestItem;
     }
 
 }

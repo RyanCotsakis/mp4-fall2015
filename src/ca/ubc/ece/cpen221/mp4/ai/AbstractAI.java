@@ -71,4 +71,54 @@ public class AbstractAI implements AI {
        }
        return numOfType;
    }
+   
+   
+   /**
+    * Moves an item in a random direction. If the direction is not available, it does not move the
+    * item.
+    * 
+    * @param animal
+    *            the item to be moved.
+    * @param world
+    *            the world that contains the item.
+    */
+   public Command MoveInRandomDirection (ArenaAnimal animal, ArenaWorld world){
+       Direction dir = Util.getRandomDirection();
+       Location newLocation = new Location(animal.getLocation(), dir);
+       if (Util.isValidLocation(world, newLocation) && this.isLocationEmpty(world, animal, newLocation)) {
+           return new MoveCommand(animal,newLocation);
+       }
+       return new WaitCommand();
+   }
+   
+   /**
+    *  Find the itemToFind that minimizes the distance between myItem and itemToFind
+    *  Precondition: itemToFind must be in fox's view range
+    * @param itemToFind the item type that we want to find the closest one  of it
+    * @param myItem the item form which we measure the distance
+    * @return the closets item to myItem of the type itemToFind
+    */
+   public Item getClosest(String itemToFind, Item myItem, int closest, ArenaWorld world, ArenaAnimal animal){
+       int smallestDistance=closest;
+       Item closestItem=null;
+       Set<Item> itemsInRange = world.searchSurroundings(animal);
+       
+          for(Item item: itemsInRange){
+              if(item.getName().equals(itemToFind)){
+                  int itemDistance=myItem.getLocation().getDistance(item.getLocation()); //gets distance of this item
+                                                                                // from my location
+                  if(itemDistance<smallestDistance){
+                      smallestDistance=itemDistance;
+                      closestItem=item;
+                      }   
+                  }
+              }
+          
+           if(closestItem == null){
+               throw new IllegalArgumentException();
+           }
+           
+           return closestItem;
+   }
+   
 }

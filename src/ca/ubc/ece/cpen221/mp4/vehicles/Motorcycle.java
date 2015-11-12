@@ -60,7 +60,6 @@ public class Motorcycle extends AbstractVehicles {
     public Command getNextAction(World world) {
         //Motorcycle runs lions over making them lose energy and it gains energy itself
         //its fuel decreases when it is moving around
-        
         Direction direction;
         Location nextLocation; 
         
@@ -74,29 +73,27 @@ public class Motorcycle extends AbstractVehicles {
             //if it hits a lion, the lion looses 20 of its energy
             //the fuel of motorcycle increases by 10
             if(item.getName().equals("Lion")){
+                
                 if(location.getDistance(item.getLocation())==1){
                     item.loseEnergy(80);
                     
                     if(energy<=MAX_ENERGY)
                         this.setEnergy(energy+10);
-                }
-                
-                //goes towards the lion if it can
-                direction=Util.getDirectionTowards(location, item.getLocation());
-                nextLocation = new Location(this.getLocation(), direction);
-                
-                if  (Util.isLocationEmpty(world, nextLocation)) {
-                    return new MoveCommand(this, nextLocation);
-                }
-                        
+                    
+                    //goes towards the lion if it can
+                    direction=Util.getDirectionTowards(location, item.getLocation());
+                    nextLocation = new Location(this.getLocation(), direction);
+                    
+                    if  (Util.isLocationEmpty(world, nextLocation)) {
+                        return new MoveCommand(this, nextLocation);
+                        }
+                    }
             }
                 
         }
         
         //gets a random direction and moves there if it is empty and the motorcycle's energy is more than 30
         //it looses 5 energies when it moves around
-        direction = Util.getRandomDirection();
-        nextLocation = new Location(this.getLocation(), direction);
         if  (energy>=30) {
             this.setEnergy(energy-5);
             return MoveCommand.moveInRandomDirection(this, world);

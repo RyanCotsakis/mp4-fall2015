@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp4.commands;
 
+import ca.ubc.ece.cpen221.mp4.ArenaWorld;
 import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
@@ -49,6 +50,8 @@ public final class MoveCommand implements Command {
 		}
 		return new WaitCommand();
 	}
+    
+	
 
 	@Override
 	public void execute(World world) throws InvalidCommandException {
