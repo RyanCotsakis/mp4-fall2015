@@ -125,14 +125,7 @@ public class Lion implements LivingItem {
         if(this.getEnergy()>=MIN_BREEDING_ENERGY && this.numOfChildren<MAX_NUM_OFFSPRINGS && breedLocation!=null)
             return new BreedCommand(this,breedLocation);
         
-        //gets a random direction and moves there if it is empty
-        Direction direction = Util.getRandomDirection();
-        Location nextLocation = new Location(this.getLocation(), direction);
-        if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
-            return new MoveCommand(this, nextLocation);
-        }
-
-        return new WaitCommand();
+        return MoveCommand.moveInRandomDirection(this, world);
     }
 
     @Override

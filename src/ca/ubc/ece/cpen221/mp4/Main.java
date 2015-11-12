@@ -38,8 +38,8 @@ public class Main {
 	static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
 	static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
 	static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
-	static final int INITIAL_BOXFOXES = 8;
-	static final int INITIAL_LIONS = 10;
+	static final int INITIAL_BOXFOXES = 2;
+	static final int INITIAL_LIONS = INITIAL_GRASS / 100;
 	
 
 	public static void main(String[] args) {
@@ -61,11 +61,11 @@ public class Main {
 		addGrass(world);
 		world.addActor(new Gardener());
 		addCatapult(world);
-		addGnats(world);
+	//	addGnats(world); I hate these things!
 		addRabbits(world);
 		addFoxes(world);
-		addCrocodiles(world);
-		addGnawtys(world);
+	//	addCrocodiles(world);
+	//	addGnawtys(world);
 		addPortaGrass(world);
 		addBoxFoxes(world);
 		addLions(world);

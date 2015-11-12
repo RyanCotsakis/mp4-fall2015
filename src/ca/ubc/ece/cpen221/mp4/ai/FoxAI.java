@@ -131,14 +131,7 @@ public class FoxAI extends AbstractAI {
            
 	   }
 	   
-       Direction dir = Util.getRandomDirection();
-       Location targetLocation = new Location(animal.getLocation(), dir);
-       if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty((World) world, targetLocation)) {
-           return new MoveCommand(animal, targetLocation);
-       }
-       
-       
-       return new WaitCommand();
+       return MoveCommand.moveInRandomDirection(animal, (World) world);
 	}
 	
 	/**Get the preferred breeding location of animal

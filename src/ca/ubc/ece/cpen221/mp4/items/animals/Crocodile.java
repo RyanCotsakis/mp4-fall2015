@@ -85,13 +85,7 @@ public class Crocodile implements LivingItem{
 		// The Crocodile selects a random direction and check if the next location at
 		// the direction is valid and empty. If yes, then it moves to the
 		// location, otherwise it waits.
-		Direction dir = Util.getRandomDirection();
-		Location targetLocation = new Location(this.getLocation(), dir);
-		if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty(world, targetLocation)) {
-			return new MoveCommand(this, targetLocation);
-		}
-
-		return new WaitCommand();
+		return MoveCommand.moveInRandomDirection(this, world);
 	}
 
 	@Override

@@ -129,18 +129,8 @@ public class Motorcycle implements MoveableItem, Actor {
                 }
                         
             }
-            
-            else{
-                //gets a random direction and moves there if it is empty
-                direction = Util.getRandomDirection();
-                nextLocation = new Location(this.getLocation(), direction);
-                if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
-                    return new MoveCommand(this, nextLocation);
-                }
-            }
-                
         }
-        return new WaitCommand();
+        return MoveCommand.moveInRandomDirection(this, world);
     }
 
 }

@@ -109,7 +109,7 @@ public class RabbitAI extends AbstractAI {
 			if(closestGrass.getLocation().getDistance(animal.getLocation()) == 1){
 				if(numOf("grass") >= numOf("Rabbit") && animal.getEnergy() <= animal.getMaxEnergy()-10)
 					return new EatCommand(animal, closestGrass);
-				return new WaitCommand();
+			//	return new WaitCommand();
 			}
 			
 			int grassX = closestGrass.getLocation().getX();
@@ -132,12 +132,7 @@ public class RabbitAI extends AbstractAI {
 			
 		}
 
-		Direction dir = Util.getRandomDirection();
-		Location targetLocation = new Location(animal.getLocation(), dir);
-		if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty((World) world, targetLocation)) {
-			return new MoveCommand(animal, targetLocation);
-		}
-		return new WaitCommand();
+		return MoveCommand.moveInRandomDirection(animal, (World) world);
 	}
 	
 	/**

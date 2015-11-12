@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.ImageIcon;
 import ca.ubc.ece.cpen221.mp4.Direction;
-import ca.ubc.ece.cpen221.mp4.Food;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
@@ -13,13 +12,12 @@ import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
 import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.*;
 
-public class BoxFox implements LivingItem{
+public class BoxFox extends Nuisance{
 
 	private static final ImageIcon boxFoxImage = Util.loadImage("boxFox.gif");
-	Location location;
 	
-	public BoxFox (Location location){
-		this.location = location;
+	public BoxFox (Location loc){
+		super.location = loc;
 	}
 	
 	@Override
@@ -30,51 +28,6 @@ public class BoxFox implements LivingItem{
 	@Override
 	public String getName ( ){
 		return "BoxFox";
-	}
-
-	@Override
-	public Location getLocation ( ){
-		return location;
-	}
-
-	@Override
-	public int getStrength ( ){
-		return Integer.MAX_VALUE;
-	}
-
-	@Override
-	public void loseEnergy (int energy){
-		return;
-	}
-
-	@Override
-	public boolean isDead ( ){
-		return false;
-	}
-
-	@Override
-	public int getPlantCalories ( ){
-		return 0;
-	}
-
-	@Override
-	public int getMeatCalories ( ){
-		return 0;
-	}
-
-	@Override
-	public void moveTo (Location targetLocation){
-		this.location = targetLocation; 
-	}
-
-	@Override
-	public int getMovingRange ( ){
-		return 1;
-	}
-
-	@Override
-	public int getCoolDownPeriod ( ){
-		return 1;
 	}
 
 	@Override
@@ -121,26 +74,6 @@ public class BoxFox implements LivingItem{
 			}
 		}
 		
-		Direction dir = Util.getRandomDirection();
-		Location targetLocation = new Location(this.getLocation(), dir);
-		if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty(world, targetLocation)) {
-			return new MoveCommand(this, targetLocation);
-		}
-		return new WaitCommand();
-	}
-
-	@Override
-	public int getEnergy ( ){
-		return 0;
-	}
-
-	@Override
-	public LivingItem breed ( ){
-		return null;
-	}
-
-	@Override
-	public void eat (Food food){
-		return;
+		return MoveCommand.moveInRandomDirection(this, world);
 	}
 }
