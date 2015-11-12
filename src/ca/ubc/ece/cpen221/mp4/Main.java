@@ -11,6 +11,7 @@ import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
 import ca.ubc.ece.cpen221.mp4.vehicles.Bomber;
 import ca.ubc.ece.cpen221.mp4.vehicles.Motorcycle;
+import ca.ubc.ece.cpen221.mp4.vehicles.Train;
 
 /**
  * The Main class initialize a world with some {@link Grass}, {@link Rabbit}s,
@@ -36,6 +37,7 @@ public class Main {
     static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
     static final int INITIAL_BOXFOXES = 8;
     static final int INITIAL_BOMBERS=4;
+    static final int INITIAL_TRAINS=10;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -66,6 +68,7 @@ public class Main {
         addLions(world);
         addMotorcycles(world);
         addBombers(world);
+        addTrains(world);
     }
 
     private void addGrass(World world) {
@@ -139,6 +142,7 @@ public class Main {
     private void addBoxFoxes(World world) {
         for (int i = 0; i < INITIAL_BOXFOXES; i++) {
             Location loc = Util.getRandomEmptyLocation(world);
+            
             BoxFox boxFox = new BoxFox(loc);
             world.addItem(boxFox);
             world.addActor(boxFox);
@@ -173,5 +177,15 @@ public class Main {
             }
             
     }
+    
+    private void addTrains(World world) {
+        for (int i = 0; i < INITIAL_TRAINS; i++) {
+            Location loc = Util.getRandomEmptyLocation(world);
+            Train train = new Train(loc);
+            world.addItem(train);
+            world.addActor(train);
+        }
+        
+}
 
 }

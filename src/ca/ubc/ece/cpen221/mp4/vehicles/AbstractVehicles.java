@@ -78,6 +78,18 @@ public abstract class AbstractVehicles implements MoveableItem, Actor {
     public int getEnergy() {
         return this.energy;
     }
+
+    @Override
+    public abstract ImageIcon getImage();
+
+    @Override
+    public abstract String getName();
+
+    @Override
+    public abstract int getCoolDownPeriod();
+
+    @Override
+    public abstract int getMovingRange();
     
 
 }

@@ -45,6 +45,7 @@ public final class MoveCommand implements Command {
 	public static Command moveInRandomDirection (MoveableItem item, World world){
 		Direction dir = Util.getRandomDirection();
 		Location newLocation = new Location(item.getLocation(), dir);
+		
 		if (Util.isValidLocation(world, newLocation) && Util.isLocationEmpty(world, newLocation)) {
 			return new MoveCommand(item,newLocation);
 		}

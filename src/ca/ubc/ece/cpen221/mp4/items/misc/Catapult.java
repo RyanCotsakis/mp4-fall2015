@@ -37,4 +37,5 @@ public class Catapult extends AbstractNuisance{
 		}
 		return MoveCommand.moveInRandomDirection(this, world);
 	}
+
 }

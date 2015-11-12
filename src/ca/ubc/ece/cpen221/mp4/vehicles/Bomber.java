@@ -94,7 +94,7 @@ public class Bomber extends AbstractVehicles {
         
         //if in at least 3 of its adjacent locations there is either a fox, boxfox or lion them explode and
         //kill them all
-        if(count==3){
+        if(count>=3){
             this.setEnergy(0);
             
             for(Item item : surroundings){
