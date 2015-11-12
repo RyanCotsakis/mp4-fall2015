@@ -16,7 +16,7 @@ import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.Item;
 import ca.ubc.ece.cpen221.mp4.items.MoveableItem;
 
-public class Motorcycle implements MoveableItem, Actor {
+public class Motorcycle extends AbstractVehicles {
     private static final int INITIAL_FUEL = 180;
     private static final int MAX_ENERGY = 250;
     private static final int STRENGTH = 200;
@@ -24,22 +24,20 @@ public class Motorcycle implements MoveableItem, Actor {
     private static final ImageIcon motocycleImage = Util.loadImage("motorcycles.gif");
 
     private Location location;
-    private int fuel;
+    private int energy;
 
     /**
      * Create a new "Motorcycle" at
      *      initialLocation. The initialLocation must be
      * valid and empty
      *
-     * @param foxAI
-     *            the AI designed for foxes
      * @param initialLocation
-     *            the location where this Fox will be created
+     *            the location where this Motorcycle will be created
      */
     public Motorcycle(Location initialLocation) {
         this.location = initialLocation;
 
-        this.fuel = INITIAL_FUEL;
+        this.energy = INITIAL_FUEL;
     }
 
     @Override
@@ -53,41 +51,8 @@ public class Motorcycle implements MoveableItem, Actor {
     }
 
     @Override
-    public Location getLocation() {
-        return location;
-    }
-
-    @Override
     public int getStrength() {
         return STRENGTH;
-    }
-
-    @Override
-    public void loseEnergy(int energy) {
-        this.fuel-=energy;
-    }
-
-    @Override
-    public boolean isDead() {
-        return fuel <=0;
-    }
-
-    @Override
-    public int getPlantCalories() {
-        //not food
-        return 0;
-    }
-
-    @Override
-    public int getMeatCalories() {
-        //not food
-        return 0;
-    }
-
-    @Override
-    public void moveTo(Location targetLocation){
-        this.location=targetLocation;
-
     }
 
     @Override
@@ -97,7 +62,7 @@ public class Motorcycle implements MoveableItem, Actor {
 
     @Override
     public int getCoolDownPeriod() {
-        return 1;
+        return COOLDOWN;
     }
 
     @Override
@@ -116,8 +81,10 @@ public class Motorcycle implements MoveableItem, Actor {
             //the fuel of motorcycle increases by 10
             if(item.getName().equals("Lion")){
                 if(location.getDistance(item.getLocation())==1){
-                    item.loseEnergy(20);
-                    this.fuel+=10;
+                    item.loseEnergy(40);
+                    
+                    if(this.energy<=MAX_ENERGY)
+                        this.energy+=10;
                 }
                 
                 //goes towards the lion if it can

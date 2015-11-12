@@ -47,7 +47,7 @@ public class RabbitAI extends AbstractAI {
 		myY = animal.getLocation().getY();
 		foxFound = false;
 		
-		if(numOf("Fox") > 0){
+		if(numOf(animal, world, "Fox") > 0){
 			foxFound = true;
 			closestFox = getClosest("Fox",animal); //get the closest fox
 			int foxX = closestFox.getLocation().getX();
@@ -77,37 +77,37 @@ public class RabbitAI extends AbstractAI {
 			Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
 				if(!foxFound || (foxFound && !dangerDirection.equals(Direction.NORTH))){
-					if(numOf("grass") > numOf("Rabbit")*2)
+					if(numOf(animal, world, "grass") > numOf(animal, world, "Rabbit")*2)
 						return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.EAST);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
 				if(!foxFound || (foxFound && !dangerDirection.equals(Direction.EAST))){
-					if(numOf("grass") > numOf("Rabbit")*2)
+					if(numOf(animal, world, "grass") > numOf(animal, world, "Rabbit")*2)
 						return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.SOUTH);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
 				if(!foxFound || (foxFound && !dangerDirection.equals(Direction.SOUTH))){
-					if(numOf("grass") > numOf("Rabbit")*2)
+					if(numOf(animal, world, "grass") > numOf(animal, world, "Rabbit")*2)
 						return new BreedCommand(animal, breedLocation);
 				}
 			}
 			breedLocation = new Location(animal.getLocation(), Direction.WEST);
 			if(this.isLocationEmpty(world, animal, breedLocation)){
 				if(!foxFound || (foxFound && !dangerDirection.equals(Direction.WEST))){
-					if(numOf("grass") > numOf("Rabbit")*2)
+					if(numOf(animal, world, "grass") > numOf(animal, world, "Rabbit")*2)
 						return new BreedCommand(animal, breedLocation);
 				}
 			}
 		}
 		
-		if(numOf("grass")>0){
+		if(numOf(animal, world, "grass")>0){
 			Item closestGrass = getClosest("grass", animal);
 			if(closestGrass.getLocation().getDistance(animal.getLocation()) == 1){
-				if(numOf("grass") >= numOf("Rabbit") && animal.getEnergy() <= animal.getMaxEnergy()-10)
+				if(numOf(animal, world, "grass") >= numOf(animal, world, "Rabbit") && animal.getEnergy() <= animal.getMaxEnergy()-10)
 					return new EatCommand(animal, closestGrass);
 			//	return new WaitCommand();
 			}
@@ -135,21 +135,6 @@ public class RabbitAI extends AbstractAI {
 		return MoveCommand.moveInRandomDirection(animal, (World) world);
 	}
 	
-	/**
-	 * get the number of an item present in the Rabbit's view range
-	 * 
-	 * @param itemName the name of the item that we want to find 
-	 * @return number of occurrences of the specified item in Rabbit's view range
-	 */
-	private int numOf(String itemName){
-		int numOfType = 0;
-		for(Item item : visibleItems){
-			if(item.getName().equals(itemName)){
-				numOfType++;
-			}
-		}
-		return numOfType;
-	}
 	
 	/**
 	 * finds the closest item of some type to the rabbit.
