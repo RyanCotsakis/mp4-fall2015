@@ -10,6 +10,8 @@ import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.MoveableItem;
 
 public abstract class AbstractVehicles implements MoveableItem, Actor {
+    private static final int STRENGTH = 200; // all vehicles have strength of 200
+    
     private Location location;
     private int energy;
 
@@ -53,8 +55,28 @@ public abstract class AbstractVehicles implements MoveableItem, Actor {
         return 0;
     }
     
-    public int accelerate(){
-        return 0;
+    @Override
+    public int getStrength() {
+        return STRENGTH;
+    }
+    
+    /**
+     * Set the location of the vehicle to the specified location
+     * Precondition: Location must be a valid location in the world
+     * @param loc to set the location of vehicle to
+     */
+    public void setLocation(Location loc){
+        this.location=loc;
+    }
+    
+    //set the energy of the vehicle
+    public void setEnergy(int energy){
+        this.energy=energy;
+    }
+    
+    //return the energy of vehicle
+    public int getEnergy() {
+        return this.energy;
     }
     
 

@@ -107,15 +107,28 @@ public class Lion implements LivingItem {
 
     @Override
     public Command getNextAction(World world) {
+        
+        Location nextLocation;
+        Direction direction;
+        
         Set<Item> surroundings = new HashSet<Item>();
         surroundings = world.searchSurroundings(location, VIEW_RANGE);
         
         for(Item item: surroundings){
-            if(item.getName().equals("Rabbit") || item.getName().equals("Crocodile") 
-                    ||item.getName().equals("Fox")){
+            if(item.getName().equals("Rabbit") || item.getName().equals("Crocodile")){
                 if(this.getLocation().getDistance(item.getLocation())==1)
                     return new EatCommand(this, item);
                     
+            }
+            
+            //runs away from motorcycles
+            if(item.getName().equals("Motorcycle")){
+                direction=Util.getDirectionTowards(this.location, item.getLocation());
+                
+                nextLocation = new Location(this.getLocation(), getOppositeDir(direction));
+                if  (Util.isLocationEmpty(world, nextLocation)) {
+                    return new MoveCommand(this, nextLocation);
+                }
             }
         }
         
@@ -125,10 +138,12 @@ public class Lion implements LivingItem {
         if(this.getEnergy()>=MIN_BREEDING_ENERGY && this.numOfChildren<MAX_NUM_OFFSPRINGS && breedLocation!=null)
             return new BreedCommand(this,breedLocation);
         
+
+        
         //gets a random direction and moves there if it is empty
-        Direction direction = Util.getRandomDirection();
-        Location nextLocation = new Location(this.getLocation(), direction);
-        if  (Util.isLocationEmpty(world, nextLocation) && Util.isValidLocation(world, nextLocation)) {
+        direction= Util.getRandomDirection();
+        nextLocation = new Location(this.getLocation(), direction);
+        if  (Util.isLocationEmpty(world, nextLocation)) {
             return new MoveCommand(this, nextLocation);
         }
 
@@ -155,6 +170,21 @@ public class Lion implements LivingItem {
     public void eat(Food food) {
         // Note that energy does not exceed energy limit.
         energy = Math.min(MAX_ENERGY, energy + food.getMeatCalories());
+    }
+    
+    public Direction getOppositeDir(Direction dir){
+        if(dir==Direction.NORTH)
+            return Direction.SOUTH;
+        
+        else if(dir==Direction.SOUTH)
+            return Direction.NORTH;
+        
+        else if(dir==Direction.EAST)
+            return Direction.WEST;
+        
+        else
+            return Direction.EAST;
+        
     }
 
 }

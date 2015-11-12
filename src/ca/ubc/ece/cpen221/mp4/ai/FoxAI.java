@@ -150,9 +150,6 @@ public class FoxAI extends AbstractAI {
 	 *         if all adjacent locations are full return null
 	 */
 	private Location getBreedingLocation(ArenaAnimal animal, ArenaWorld world){
-	    //we should definitely make this nicer but the ideas is you prefer to breed somewhere if there is a rabbit
-	    //adjacent to that breeding location so check that for all directions first and if neither of them have
-	    //adjacent rabbits just breed anywhere that is empty
 	    Location breedLocation = new Location(animal.getLocation(), Direction.NORTH);
 	    
 	    

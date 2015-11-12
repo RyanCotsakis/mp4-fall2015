@@ -9,6 +9,7 @@ import ca.ubc.ece.cpen221.mp4.items.animals.*;
 import ca.ubc.ece.cpen221.mp4.items.misc.*;
 import ca.ubc.ece.cpen221.mp4.staff.WorldImpl;
 import ca.ubc.ece.cpen221.mp4.staff.WorldUI;
+import ca.ubc.ece.cpen221.mp4.vehicles.Bomber;
 import ca.ubc.ece.cpen221.mp4.vehicles.Motorcycle;
 
 /**
@@ -27,19 +28,15 @@ public class Main {
     static final int INITIAL_GNATS = INITIAL_GRASS / 4;
     static final int INITIAL_RABBITS = INITIAL_GRASS / 10;
     static final int INITIAL_FOXES = INITIAL_GRASS / 20;
-    static final int INITIAL_TIGERS = INITIAL_GRASS / 32;
-    static final int INITIAL_BEARS = INITIAL_GRASS / 40;
-    static final int INITIAL_HYENAS = INITIAL_GRASS / 32;
-    static final int INITIAL_CARS = INITIAL_GRASS / 100;
     static final int INITIAL_LIONS = 10;
     static final int INITIAL_TRUCKS = INITIAL_GRASS / 150;
     static final int INITIAL_MOTORCYCLES = INITIAL_LIONS;
     static final int INITIAL_MANS = INITIAL_GRASS / 150;
     static final int INITIAL_WOMANS = INITIAL_GRASS / 100;
-    static final int INITIAL_HUNTERS = INITIAL_GRASS / 150;
     static final int INITIAL_CROCODILES = INITIAL_GRASS / 20;
     static final int INITIAL_GNAWTYS = INITIAL_GRASS / 30;
     static final int INITIAL_BOXFOXES = 8;
+    static final int INITIAL_BOMBERS=4;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -69,6 +66,7 @@ public class Main {
         addBoxFoxes(world);
         addLions(world);
         addMotorcycles(world);
+        addBombers(world);
     }
 
     private void addGrass(World world) {
@@ -164,5 +162,15 @@ public class Main {
             world.addItem(motor);
             world.addActor(motor);
         }
+    }
+        
+    private void addBombers(World world) {
+            for (int i = 0; i < INITIAL_BOMBERS; i++) {
+                Location loc = Util.getRandomEmptyLocation(world);
+                Bomber bomber = new Bomber(loc);
+                world.addItem(bomber);
+                world.addActor(bomber);
+            }
+            
     }
 }

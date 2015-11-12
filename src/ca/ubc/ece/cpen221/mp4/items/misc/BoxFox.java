@@ -16,10 +16,13 @@ import ca.ubc.ece.cpen221.mp4.items.*;
 public class BoxFox implements LivingItem{
 
 	private static final ImageIcon boxFoxImage = Util.loadImage("boxFox.gif");
+	
 	Location location;
+	private boolean isDead;
 	
 	public BoxFox (Location location){
 		this.location = location;
+		isDead = false;
 	}
 	
 	@Override
@@ -44,7 +47,8 @@ public class BoxFox implements LivingItem{
 
 	@Override
 	public void loseEnergy (int energy){
-		return;
+	    //BoxFox dies when it loses energy
+	    isDead = true;
 	}
 
 	@Override
