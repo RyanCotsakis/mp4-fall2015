@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.ImageIcon;
 import ca.ubc.ece.cpen221.mp4.Direction;
-import ca.ubc.ece.cpen221.mp4.Food;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
@@ -13,17 +12,18 @@ import ca.ubc.ece.cpen221.mp4.commands.MoveCommand;
 import ca.ubc.ece.cpen221.mp4.commands.WaitCommand;
 import ca.ubc.ece.cpen221.mp4.items.*;
 
-public class BoxFox implements LivingItem{
+public class BoxFox extends AbstractNuisance{
 
 	private static final ImageIcon boxFoxImage = Util.loadImage("boxFox.gif");
 	
 	Location location;
 	private boolean isDead;
 	
-	public BoxFox (Location location){
-		this.location = location;
+	public BoxFox (Location loc){
+	    setLocation(loc);
 		isDead = false;
 	}
+	
 	
 	@Override
 	public ImageIcon getImage ( ){
@@ -33,11 +33,6 @@ public class BoxFox implements LivingItem{
 	@Override
 	public String getName ( ){
 		return "BoxFox";
-	}
-
-	@Override
-	public Location getLocation ( ){
-		return location;
 	}
 
 	@Override
@@ -125,26 +120,6 @@ public class BoxFox implements LivingItem{
 			}
 		}
 		
-		Direction dir = Util.getRandomDirection();
-		Location targetLocation = new Location(this.getLocation(), dir);
-		if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty(world, targetLocation)) {
-			return new MoveCommand(this, targetLocation);
-		}
-		return new WaitCommand();
-	}
-
-	@Override
-	public int getEnergy ( ){
-		return 0;
-	}
-
-	@Override
-	public LivingItem breed ( ){
-		return null;
-	}
-
-	@Override
-	public void eat (Food food){
-		return;
+		return MoveCommand.moveInRandomDirection(this, world);
 	}
 }

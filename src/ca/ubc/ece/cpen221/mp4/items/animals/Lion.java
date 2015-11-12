@@ -141,13 +141,8 @@ public class Lion implements LivingItem {
 
         
         //gets a random direction and moves there if it is empty
-        direction= Util.getRandomDirection();
-        nextLocation = new Location(this.getLocation(), direction);
-        if  (Util.isLocationEmpty(world, nextLocation)) {
-            return new MoveCommand(this, nextLocation);
-        }
+       return MoveCommand.moveInRandomDirection(this, world);
 
-        return new WaitCommand();
     }
 
     @Override

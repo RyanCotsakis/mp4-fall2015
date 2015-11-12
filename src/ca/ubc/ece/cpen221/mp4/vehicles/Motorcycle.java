@@ -97,12 +97,11 @@ public class Motorcycle extends AbstractVehicles {
         //it looses 5 energies when it moves around
         direction = Util.getRandomDirection();
         nextLocation = new Location(this.getLocation(), direction);
-        if  (Util.isLocationEmpty(world, nextLocation) && energy>=30) {
+        if  (energy>=30) {
             this.setEnergy(energy-5);
-            return new MoveCommand(this, nextLocation);
-        }
+            return MoveCommand.moveInRandomDirection(this, world);
+            }
         
         return new WaitCommand();
-    }
-
+        }
 }

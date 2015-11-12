@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp4.commands;
 
+import ca.ubc.ece.cpen221.mp4.Direction;
 import ca.ubc.ece.cpen221.mp4.Location;
 import ca.ubc.ece.cpen221.mp4.Util;
 import ca.ubc.ece.cpen221.mp4.World;
@@ -29,6 +30,24 @@ public final class MoveCommand implements Command {
 	public MoveCommand(MoveableItem item, Location targetLocation) {
 		this.item = item;
 		this.targetLocation = targetLocation;
+	}
+	
+	/**
+	 * Moves an item in a random direction. If the direction is not available, it does not move the
+	 * item.
+	 * 
+	 * @param item
+	 *            the item to be moved.
+	 * @param world
+	 *            the world that contains the item.
+	 */
+	public static Command moveInRandomDirection (MoveableItem item, World world){
+		Direction dir = Util.getRandomDirection();
+		Location newLocation = new Location(item.getLocation(), dir);
+		if (Util.isValidLocation(world, newLocation) && Util.isLocationEmpty(world, newLocation)) {
+			return new MoveCommand(item,newLocation);
+		}
+		return new WaitCommand();
 	}
 
 	@Override

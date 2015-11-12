@@ -132,14 +132,7 @@ public class FoxAI extends AbstractAI {
            
 	   }
 	   
-       Direction dir = Util.getRandomDirection();
-       Location targetLocation = new Location(animal.getLocation(), dir);
-       if (Util.isValidLocation(world, targetLocation) && Util.isLocationEmpty((World) world, targetLocation)) {
-           return new MoveCommand(animal, targetLocation);
-       }
-       
-       
-       return new WaitCommand();
+       return MoveCommand.moveInRandomDirection(animal, (World) world);
 	}
 	
 	/**Get the preferred breeding location of animal
@@ -277,54 +270,5 @@ public class FoxAI extends AbstractAI {
             
             return closestItem;
     }
-	
-//    /**
-//     * Get the shortest possible path from my location to the target location
-//     * @param myLocation
-//     * @param targetLocation of the rabbit
-//     * @return
-//     */
-//    private int getShortestPath(Location myLocation, Location targetLocation){
-//        int shortestPath=0;
-//        
-//      //get x and y coordinates of the target
-//        int targetX=targetLocation.getX();
-//        int targetY=targetLocation.getY();
-//        
-//        //get my x and y coordinates
-//        int myX=myLocation.getX();
-//        int myY=myLocation.getX();
-//        
-//        //get a list of all the obstacles in my way that are also in my view range
-//        //only grass is considered an obstacle
-//        LinkedList<Item> obstacles= new LinkedList<Item>();
-//        for(Item item:itemsInRange){
-//            if(item.getName().equals("Grass")){
-//                
-//                //check to see if there are obstacles in the path from my location to the target location
-//                if((item.getLocation().getX()>=targetX && item.getLocation().getX()<=myX)
-//                        || (item.getLocation().getX()<=targetX && item.getLocation().getX()>=myX)){
-//                    
-//                    if((item.getLocation().getY()>=targetY && item.getLocation().getY()<=myY)
-//                        || (item.getLocation().getY()<=targetY && item.getLocation().getY()>=myY)){
-//                        obstacles.add(item);
-//                    }
-//                }
-//            }
-//        }
-//        if(obstacles.isEmpty()){
-//            shortestPath=myLocation.getDistance(targetLocation);
-//            return shortestPath;
-//            
-//        }
-//        
-//        else{
-//            return shortestPath; //need to change this...
-//        }
-//    }
-    
-	
-
-
 
 }

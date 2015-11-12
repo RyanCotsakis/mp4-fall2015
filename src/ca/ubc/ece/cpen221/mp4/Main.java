@@ -20,7 +20,6 @@ import ca.ubc.ece.cpen221.mp4.vehicles.Motorcycle;
  *
  */
 public class Main {
-
     static final int X_DIM = 40;
     static final int Y_DIM = 40;
     static final int SPACES_PER_GRASS = 7;
@@ -162,6 +161,7 @@ public class Main {
             world.addItem(motor);
             world.addActor(motor);
         }
+
     }
         
     private void addBombers(World world) {
@@ -173,4 +173,5 @@ public class Main {
             }
             
     }
+
 }
